@@ -1,0 +1,12 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.anuj.btcom" >
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <application>
+        <meta-data android:name=" com.Picovr.Type " android:value="vr"/>
+        <meta-data android:name=" pvr.app.type " android:value="vr"/>
+        <meta-data android:name=" pvr.display.orientation " android:value="180"/>
+        <meta-data android:name=" com.softwinner.vr.mode" android:value="vr"/>
+    </application>
+</manifest>
