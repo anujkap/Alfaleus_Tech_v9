@@ -342,7 +342,7 @@ public class MainActivity extends AppCompatActivity {
         j[0] = 0;
         int val = new Random().nextInt(256);
         int co = Color.rgb(val,val,val);
-        sendMessage(Integer.toHexString(co).substring(1)+",l0,"+new Random().nextFloat()*3.0);
+        sendMessage(Integer.toHexString(co).substring(1)+",l0,"+new Random().nextFloat()*3.0+","+(150+(new Random().nextInt(50))));
     }
 
     void msgRead(String s){
@@ -355,21 +355,21 @@ public class MainActivity extends AppCompatActivity {
                 responses.add(true);
                 if(i[0]<=15)
                 {
-                    sendMessage(colo+",l"+ i[0]++ +","+size);
+                    sendMessage(colo+",l"+ i[0]++ +","+size+","+(150+(new Random().nextInt(50))));
                 }
                 else
                 {
-                    sendMessage(colo+",r"+ j[0]++ +","+size);
+                    sendMessage(colo+",r"+ j[0]++ +","+size+","+(150+(new Random().nextInt(50))));
                     i[0]++;
                 }
             }
             else if(s.substring(s.indexOf(":")+1).equalsIgnoreCase("No")){
                 responses.add(false);
                 if(i[0]<=15)
-                    sendMessage(colo+",l"+ i[0]++ +","+size);
+                    sendMessage(colo+",l"+ i[0]++ +","+size+","+(150+(new Random().nextInt(50))));
                 else
                 {
-                    sendMessage(colo+",r"+ j[0]++ +","+size);
+                    sendMessage(colo+",r"+ j[0]++ +","+size+","+(150+(new Random().nextInt(50))));
                     i[0]++;
                 }
             }
