@@ -32,6 +32,7 @@ import androidx.databinding.ObservableArrayList;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 
@@ -43,11 +44,12 @@ public class MainActivity extends AppCompatActivity {
     private Button btnConnect;
     private ListView listView;
     private Dialog dialog;
-    private TextInputLayout inputLayout;
+    private TextInputLayout color_in,pos_inx,pos_iny,size_in,back_in;
     private ArrayAdapter<String> chatAdapter;
     private ObservableArrayList<String> chatMessages;
     private ArrayList<Boolean> responses;
     private BluetoothAdapter bluetoothAdapter;
+    private String Scolor_in,Spos_inx,Spos_iny,Ssize_in,Sback_in;
     Bitmap b;
     Canvas c;
     ImageView v;
@@ -141,9 +143,14 @@ public class MainActivity extends AppCompatActivity {
                 case MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
                     String readMessage = new String(readBuf, 0, msg.arg1);
-                    chatMessages.add(readMessage);
-                    msgRead(readMessage);
-                    chatAdapter.notifyDataSetChanged();
+                    if(!readMessage.startsWith("eye"))
+                    {
+                        chatMessages.add(readMessage);
+                        chatAdapter.notifyDataSetChanged();
+                    }
+                    else
+                        msgRead(readMessage);
+
                     break;
                 case MESSAGE_DEVICE_OBJECT:
                     connectingDevice = msg.getData().getParcelable(DEVICE_OBJECT);
@@ -252,7 +259,12 @@ public class MainActivity extends AppCompatActivity {
         status = findViewById(R.id.status);
         btnConnect = findViewById(R.id.btn_connect);
         listView = findViewById(R.id.list);
-        inputLayout = findViewById(R.id.input_layout);
+        color_in = findViewById(R.id.input_layout1);
+        pos_inx = findViewById(R.id.input_layout2);
+        pos_iny = findViewById(R.id.input_layout3);
+        size_in = findViewById(R.id.input_layout4);
+        back_in = findViewById(R.id.input_layout5);
+
         View btnSend = findViewById(R.id.btn_send);
 
         btnSend.setOnClickListener(new View.OnClickListener() {
@@ -260,8 +272,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //      Random rnd = new Random();
 //                    int co = Color.argb(255,rnd.nextInt(256),rnd.nextInt(256),rnd.nextInt(256));
-                    sendPoints();
-                    inputLayout.getEditText().setText("");
+                Scolor_in = Objects.requireNonNull(color_in.getEditText()).getText().toString();
+                Spos_inx = Objects.requireNonNull(pos_inx.getEditText()).getText().toString();
+                Spos_iny = Objects.requireNonNull(pos_iny.getEditText()).getText().toString();
+                Ssize_in = Objects.requireNonNull(size_in.getEditText()).getText().toString();
+                Sback_in = Objects.requireNonNull(back_in.getEditText()).getText().toString();
+                sendPoints();
 
             }
         });
@@ -338,11 +354,11 @@ public class MainActivity extends AppCompatActivity {
         }
     };
     void sendPoints(){
-        i[0] = 1;
-        j[0] = 0;
-        int val = new Random().nextInt(256);
-        int co = Color.rgb(val,val,val);
-        sendMessage(Integer.toHexString(co).substring(1)+",l0,"+new Random().nextFloat()*3.0+","+(150+(new Random().nextInt(50))));
+//        i[0] = 1;
+//        j[0] = 0;
+//        int val = new Random().nextInt(256);
+//        int co = Color.rgb(val,val,val);
+        sendMessage(Scolor_in+",x"+Spos_inx+","+"y"+Spos_iny+","+Ssize_in+","+Sback_in);
     }
 
     void msgRead(String s){
@@ -375,12 +391,18 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
-        else if(s.startsWith("x")){
+        else if(s.startsWith("eye")){
             c.restoreToCount(count);
-            c.drawColor(Color.WHITE);
-            int x = Integer.parseInt(s.substring(s.indexOf("x")+1,s.indexOf("x")+3));
-            int y = Integer.parseInt(s.substring(s.indexOf("y")+1,s.indexOf("y")+3));
-            c.drawCircle(x,y,10,p);
+            if(s.substring(s.indexOf(":")+1).equalsIgnoreCase("yes")){
+                c.drawColor(Color.GREEN);
+            }
+            else if(s.substring(s.indexOf(":")+1).equalsIgnoreCase("no")){
+                c.drawColor(Color.RED);
+            }
+//            c.drawColor(Color.WHITE);
+//            int x = Integer.parseInt(s.substring(s.indexOf("x")+1,s.indexOf("x")+3));
+//            int y = Integer.parseInt(s.substring(s.indexOf("y")+1,s.indexOf("y")+3));
+//            c.drawCircle(x,y,10,p);
             v.setImageBitmap(b);
         }
         else{
