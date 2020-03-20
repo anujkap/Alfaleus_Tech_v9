@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     Canvas c;
     ImageView v;
     Paint p;
+    View btnSend;
     int count, i[] = {0}, j[] = {0};
 
     public static final int MESSAGE_STATE_CHANGE = 1;
@@ -148,8 +149,7 @@ public class MainActivity extends AppCompatActivity {
                         chatMessages.add(readMessage);
                         chatAdapter.notifyDataSetChanged();
                     }
-                    else
-                        msgRead(readMessage);
+                    msgRead(readMessage);
 
                     break;
                 case MESSAGE_DEVICE_OBJECT:
@@ -265,19 +265,30 @@ public class MainActivity extends AppCompatActivity {
         size_in = findViewById(R.id.input_layout4);
         back_in = findViewById(R.id.input_layout5);
 
-        View btnSend = findViewById(R.id.btn_send);
+        btnSend = findViewById(R.id.btn_send);
 
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //      Random rnd = new Random();
 //                    int co = Color.argb(255,rnd.nextInt(256),rnd.nextInt(256),rnd.nextInt(256));
+//                btnSend.setEnabled(false);
                 Scolor_in = Objects.requireNonNull(color_in.getEditText()).getText().toString();
                 Spos_inx = Objects.requireNonNull(pos_inx.getEditText()).getText().toString();
                 Spos_iny = Objects.requireNonNull(pos_iny.getEditText()).getText().toString();
                 Ssize_in = Objects.requireNonNull(size_in.getEditText()).getText().toString();
                 Sback_in = Objects.requireNonNull(back_in.getEditText()).getText().toString();
                 sendPoints();
+
+
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        sendMessage(" ");
+                    }
+                },10);
+
 
             }
         });
@@ -353,6 +364,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+
+
     void sendPoints(){
 //        i[0] = 1;
 //        j[0] = 0;
@@ -367,28 +380,28 @@ public class MainActivity extends AppCompatActivity {
         String colo = Integer.toHexString(col).substring(1);
         double size = new Random().nextFloat()*3.0;
         if(s.startsWith(pico_tag) && i[0]<=31){
-            if(s.substring(s.indexOf(":")+1).equalsIgnoreCase("Yes")){
-                responses.add(true);
-                if(i[0]<=15)
-                {
-                    sendMessage(colo+",l"+ i[0]++ +","+size+","+(150+(new Random().nextInt(50))));
-                }
-                else
-                {
-                    sendMessage(colo+",r"+ j[0]++ +","+size+","+(150+(new Random().nextInt(50))));
-                    i[0]++;
-                }
-            }
-            else if(s.substring(s.indexOf(":")+1).equalsIgnoreCase("No")){
-                responses.add(false);
-                if(i[0]<=15)
-                    sendMessage(colo+",l"+ i[0]++ +","+size+","+(150+(new Random().nextInt(50))));
-                else
-                {
-                    sendMessage(colo+",r"+ j[0]++ +","+size+","+(150+(new Random().nextInt(50))));
-                    i[0]++;
-                }
-            }
+//            if(s.substring(s.indexOf(":")+1).equalsIgnoreCase("Yes")){
+//                responses.add(true);
+//                if(i[0]<=15)
+//                {
+//                    sendMessage(colo+",l"+ i[0]++ +","+size+","+(150+(new Random().nextInt(50))));
+//                }
+//                else
+//                {
+//                    sendMessage(colo+",r"+ j[0]++ +","+size+","+(150+(new Random().nextInt(50))));
+//                    i[0]++;
+//                }
+//            }
+//            else if(s.substring(s.indexOf(":")+1).equalsIgnoreCase("No")){
+//                responses.add(false);
+//                if(i[0]<=15)
+//                    sendMessage(colo+",l"+ i[0]++ +","+size+","+(150+(new Random().nextInt(50))));
+//                else
+//                {
+//                    sendMessage(colo+",r"+ j[0]++ +","+size+","+(150+(new Random().nextInt(50))));
+//                    i[0]++;
+//                }
+//            }
 
         }
         else if(s.startsWith("eye")){
@@ -405,9 +418,12 @@ public class MainActivity extends AppCompatActivity {
 //            c.drawCircle(x,y,10,p);
             v.setImageBitmap(b);
         }
-        else{
-            sendMessage("received");
+        else if(s.equalsIgnoreCase("received")){
+            btnSend.setEnabled(true);
         }
+//        else{
+//            sendMessage("received");
+//        }
     }
 
 }
