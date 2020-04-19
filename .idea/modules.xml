@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BluetoothChatAppAndroid-master.iml" filepath="$PROJECT_DIR$/BluetoothChatAppAndroid-master.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/btcom/btcom.iml" filepath="$PROJECT_DIR$/btcom/btcom.iml" />
-      <module fileurl="file://$PROJECT_DIR$/test/test.iml" filepath="$PROJECT_DIR$/test/test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BluetoothChatAppAndroid-master.iml" filepath="$PROJECT_DIR$/BluetoothChatAppAndroid-master.iml" group="BluetoothChatAppAndroid-master" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="BluetoothChatAppAndroid-master/app" />
+      <module fileurl="file://$PROJECT_DIR$/btcom/btcom.iml" filepath="$PROJECT_DIR$/btcom/btcom.iml" group="BluetoothChatAppAndroid-master/btcom" />
     </modules>
   </component>
 </project>
